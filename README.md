@@ -58,7 +58,9 @@ curl -i https://$ORG-$ENV.apigee.net/gcs-get/kvm/keyjson \
   -d @my-gcs-project-service-account-key.json 
 ```
 
-You should see a 204 / No Content response. 
+You should see a 204 / No Content response. This will indicate success. It provisions the 
+Service Account key JSON into the encrypted KVM in Apigee. This JSON will be used in the next step to 
+obtain an OAuth token. 
 
 Now, invoke the proxy to download an object from a named bucket. 
 
