@@ -29,7 +29,7 @@ You can also do these things using [gcloud](https://cloud.google.com/sdk/docs/in
 
 Use the Apigee Admin UI to: 
 
-1. Create an encrytped KVM called 'secrets'
+1. Create an encrypted KVM called 'secrets'
 
 2. Import and Deploy the sharedflow.
 
@@ -75,11 +75,51 @@ You should see the downloaded object.
 
 ## What's Happening
 
-The API Proxy uses the  service account key to Obtain and cache an OAuth token suitable for 
-reading from GCS. 
+The API Proxy uses the service account key to Obtain and cache an OAuth token
+suitable for reading from GCS. This process is described
+[here](https://developers.google.com/identity/protocols/oauth2/service-account#authorizingrequests). In
+short, the app must create a self-signed JWT and POSTs it to
+https://oauth2.googleapis.com/token with a x-www-form-urlencoded payload, and two form parameters: 
 
-It then uses that token to inquire the object and retrieve the media link for the object, and then 
-performs a GET on that media link, again using the googleapis OAuth token. 
+*  *grant_type* = urn:ietf:params:oauth:grant-type:jwt-bearer
+* *assertion* = THE_JWT
+
+
+The JWT payload must be like this:
+```
+{
+  "aud": "https://oauth2.googleapis.com/token",
+  "scope": "https://www.googleapis.com/auth/devstorage.read_only",
+  "iss": "gcs-access-1@dchiesa-first-project.iam.gserviceaccount.com",
+  "exp": 1611961265,
+  "iat": 1611961235,
+  "jti": "21a59398-b9f1-4fde-a109-a3d4aacd0f29"
+}
+```
+
+Some highlights there: 
+* the `aud` claim must be the Googleapis oauth token endpoint URL
+* the lifetime of the token (`exp` - `iat`) must be no longer than 5 minutes (300 seconds)
+* the `scope` should be appropriate for whatever you want the token to do... in this case we want to read from GCS, so that scope will be the minimum necessary. 
+
+That JWT must be signed with the private key belonging to the service account. 
+Whew, that's a lot to keep straight!
+
+The response contains an OAuth token, like this: 
+
+```
+{
+  "access_token":"ya29.c.Kp0B7wfDA...",
+  "expires_in":3599,
+  "token_type":"Bearer"
+}
+```
+
+The API Proxy then uses _that token_ to inquire the object in GCS, via
+ServiceCallout.  With this step, it retrieves the media link for the
+object. Finally, the proxy sets the `target.url` to the value of that media
+link, again using the googleapis OAuth token. In other words, Apigee proxies to
+the GCS endpoint.
 
 
 
