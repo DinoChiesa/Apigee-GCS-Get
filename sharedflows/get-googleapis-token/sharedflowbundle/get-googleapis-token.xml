@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SharedFlowBundle revision="1" name="get-googleapis-token">
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <CreatedAt>1486431487439</CreatedAt>
+    <CreatedBy>dchiesa@google.com</CreatedBy>
+    <Description></Description>
+    <DisplayName>get-googleapis-token</DisplayName>
+    <LastModifiedAt>1486431673737</LastModifiedAt>
+    <LastModifiedBy>dchiesa@google.com</LastModifiedBy>
+    <subType>SharedFlow</subType>
+    <validate>false</validate>
+    <SharedFlows>
+        <SharedFlow>default</SharedFlow>
+    </SharedFlows>
+</SharedFlowBundle>

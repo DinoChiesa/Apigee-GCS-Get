@@ -1,0 +1,16 @@
+
+**/Icon*
+**/Icon
+*/Icon
+Icon
+
+**/#*.*#
+**/*.*~
+**/#*#
+**/*~
+
+**/node_modules/
+**/.tern-port
+
+**/*.class
+

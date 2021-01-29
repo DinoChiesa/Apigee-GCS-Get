@@ -1,0 +1,6 @@
+<FlowCallout name='FC-Get-GoogleApis-Token'>
+  <Parameters>
+    <Parameter name='desiredScope'>https://www.googleapis.com/auth/devstorage.read_only</Parameter>
+  </Parameters>
+  <SharedFlowBundle>get-googleapis-token</SharedFlowBundle>
+</FlowCallout>

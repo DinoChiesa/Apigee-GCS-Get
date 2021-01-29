@@ -1,0 +1,22 @@
+<ServiceCallout name='SC-Get-Object-Metadata'>
+  <Request variable='simpleGetRequest'>
+    <Set>
+      <Headers>
+        <Header name='Authorization'>Bearer {gcp_bearer_token}</Header>
+      </Headers>
+      <Verb>GET</Verb>
+      <Path>/storage/v1{proxy.pathsuffix}</Path>
+    </Set>
+  </Request>
+  <Response>metadataResponse</Response>
+  <HTTPTargetConnection>
+    <SSLInfo>
+      <Enabled>true</Enabled>
+      <IgnoreValidationErrors>false</IgnoreValidationErrors>
+    </SSLInfo>
+    <Properties>
+      <Property name='success.codes'>2xx</Property>
+    </Properties>
+    <URL>https://storage.googleapis.com</URL>
+  </HTTPTargetConnection>
+</ServiceCallout>

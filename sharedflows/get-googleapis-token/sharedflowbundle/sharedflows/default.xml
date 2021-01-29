@@ -1,0 +1,34 @@
+<SharedFlow name="default">
+  <!-- ============================================  -->
+  <!-- Get a bearer token for Google APIs            -->
+  <!-- and put it in the cache.                      -->
+  <Step>
+    <Name>Cache-Lookup-GCP-Token</Name>
+  </Step>
+  <Step>
+    <Name>KVM-Get-ServiceAccountJson</Name>
+    <Condition>gcp_bearer_token = null</Condition>
+  </Step>
+  <Step>
+    <Name>JS-ShredCredentialsJson</Name>
+    <Condition>gcp_bearer_token = null</Condition>
+  </Step>
+  <Step>
+    <Name>Generate-JWT-SelfSigned</Name>
+    <Condition>gcp_bearer_token = null</Condition>
+  </Step>
+  <Step>
+    <Name>SC-PostToken</Name>
+    <Condition>gcp_bearer_token = null</Condition>
+  </Step>
+  <Step>
+    <Name>AM-Extract-GCP-Token</Name>
+    <Condition>gcp_bearer_token = null</Condition>
+  </Step>
+  <Step>
+    <Name>Cache-Populate-GCP-Token</Name>
+    <Condition>tokenResponse != null</Condition>
+  </Step>
+  <!-- ============================================  -->
+
+</SharedFlow>

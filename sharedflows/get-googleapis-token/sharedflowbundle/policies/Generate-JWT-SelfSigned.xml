@@ -1,0 +1,13 @@
+<GenerateJWT name="Generate-JWT-SelfSigned">
+    <Algorithm>RS256</Algorithm>
+    <PrivateKey>
+        <Value ref="private.private_key"/>
+    </PrivateKey>
+    <Issuer ref="private.client_email"/>
+    <Audience ref="private.token_uri"/>
+    <ExpiresIn>30s</ExpiresIn>
+    <AdditionalClaims>
+        <Claim name="scope" type="string" ref='desiredScope'/>
+    </AdditionalClaims>
+    <OutputVariable>self_signed_jwt</OutputVariable>
+</GenerateJWT>

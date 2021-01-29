@@ -1,0 +1,25 @@
+<ServiceCallout name='SC-PostToken'>
+  <Request>
+    <Set>
+      <Headers>
+        <Header name='content-type'>application/x-www-form-urlencoded</Header>
+      </Headers>
+      <FormParams>
+        <FormParam name='assertion'>{self_signed_jwt}</FormParam>
+        <FormParam name='grant_type'>urn:ietf:params:oauth:grant-type:jwt-bearer</FormParam>
+      </FormParams>
+      <Verb>POST</Verb>
+    </Set>
+  </Request>
+  <Response>tokenResponse</Response>
+  <HTTPTargetConnection>
+    <SSLInfo>
+      <Enabled>true</Enabled>
+      <IgnoreValidationErrors>true</IgnoreValidationErrors>
+    </SSLInfo>
+    <Properties>
+      <Property name='success.codes'>2xx, 3xx</Property>
+    </Properties>
+    <URL>https://oauth2.googleapis.com/token</URL>
+  </HTTPTargetConnection>
+</ServiceCallout>

@@ -1,0 +1,17 @@
+<PopulateCache name='Cache-Populate-GCP-Token'>
+  <!-- <CacheResource>cache1</CacheResource> -->
+  <Scope>Application</Scope>
+  <Source>gcp_bearer_token</Source>
+  <CacheKey>
+    <Prefix>google-tokens</Prefix>
+    <KeyFragment>googleapis-token</KeyFragment>
+  </CacheKey>
+  <ExpirySettings>
+    <!--
+         GCP tokens last one hour, so the TTL can be
+         anything less than that. For demo purposes, let's
+         make it 300 seconds.
+     -->
+    <TimeoutInSec>300</TimeoutInSec>
+  </ExpirySettings>
+</PopulateCache>

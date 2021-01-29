@@ -1,0 +1,55 @@
+<ProxyEndpoint name="kvm">
+
+  <HTTPProxyConnection>
+    <BasePath>/gcs-get/kvm</BasePath>
+    <VirtualHost>secure</VirtualHost>
+  </HTTPProxyConnection>
+
+  <FaultRules/>
+
+  <PreFlow name="PreFlow">
+    <Request/>
+    <Response/>
+  </PreFlow>
+
+  <PostFlow name="PostFlow">
+    <Request/>
+    <Response/>
+  </PostFlow>
+
+  <PostClientFlow name="PostClientFlow">
+    <Request/>
+    <Response>
+    </Response>
+  </PostClientFlow>
+
+  <Flows>
+    <Flow name="post-key-to-settings-kvm">
+      <Request>
+        <Step>
+          <Name>KVM-Put-ServiceAccountJson</Name>
+        </Step>
+      </Request>
+      <Response>
+        <Step>
+          <Name>AM-KeyResponse</Name>
+        </Step>
+      </Response>
+      <Condition>proxy.pathsuffix MatchesPath "/keyjson" AND request.verb = "POST"</Condition>
+    </Flow>
+
+    <Flow name="unknown request">
+      <Request>
+        <Step>
+          <Name>RF-UnknownRequest</Name>
+        </Step>
+      </Request>
+      <Response>
+      </Response>
+    </Flow>
+
+  </Flows>
+
+  <RouteRule name="none"/>
+
+</ProxyEndpoint>

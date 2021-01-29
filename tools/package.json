@@ -1,0 +1,19 @@
+{
+  "name": "oauthv2-cc-and-jwt-example-tools",
+  "version": "1.0.1",
+  "description": "tools for OAuthV2 CC-and-JWT Example",
+  "main": "provision.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dino Chiesa <dchiesa@google.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "apigee-edge-js": ">=0.4.19",
+    "sprintf-js": "^1.1.1",
+    "node-getopt": "^0.3.1"
+  },
+  "engines": {
+    "node": ">6.2.0"
+  }
+}

@@ -1,0 +1,14 @@
+<Javascript timeLimit="200" name="JS-Shred-Metadata-Response">
+  <!--
+    Did not work on hybrid. Rejected as invalid. Pending bug.
+
+    <Source>
+      .. source goes here...
+    </Source>
+  -->
+  <Properties>
+    <Property name='source'>metadataResponse.content</Property>
+    <Property name='outputVarPrefix'>objectmetadata.</Property>
+  </Properties>
+  <ResourceURL>jsc://shredJson.js</ResourceURL>
+</Javascript>

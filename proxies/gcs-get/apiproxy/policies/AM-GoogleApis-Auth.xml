@@ -1,0 +1,14 @@
+<AssignMessage name='AM-GoogleApis-Auth'>
+  <AssignTo>request</AssignTo>
+  <Set>
+    <Headers>
+      <Header name='Authorization'>Bearer {gcp_bearer_token}</Header>
+    </Headers>
+  </Set>
+
+  <AssignVariable>
+    <Name>target.url</Name>
+    <Ref>objectmetadata.mediaLink</Ref>
+  </AssignVariable>
+
+</AssignMessage>
