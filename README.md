@@ -41,6 +41,7 @@ Alternatively, you can automate these steps using the provisioning tool.  It req
 
 ```
 cd tools
+npm install
 ORG=myorg
 ENV=test
 node ./provision.js -v -n -o $ORG -e $ENV 
