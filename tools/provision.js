@@ -1,10 +1,10 @@
 #! /usr/local/bin/node
 /*jslint node:true */
-// provisioningTool.js
+// provision.js
 // ------------------------------------------------------------------
 // provision an Apigee Proxy and sharedflow for a GCS example.
 //
-// Copyright 2017-2020 Google LLC.
+// Copyright 2017-2021 Google LLC.
 //
 
 /* jshint esversion: 9, strict:implied */
@@ -21,7 +21,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// last saved: <2021-January-29 14:09:21>
+// last saved: <2021-May-10 08:21:38>
 
 const apigeejs   = require('apigee-edge-js'),
       common     = apigeejs.utility,
@@ -29,7 +29,7 @@ const apigeejs   = require('apigee-edge-js'),
       util       = require('util'),
       path       = require('path'),
       Getopt     = require('node-getopt'),
-      version    = '20210129-1227',
+      version    = '20210510-0820',
       getopt     = new Getopt(common.commonOptions.concat([
         ['R' , 'reset', 'Optional. Reset, delete all the assets previously created by this script'],
         ['e' , 'env=ARG', 'the Edge environment to use for this demonstration. ']
@@ -43,9 +43,6 @@ const apiproxyName   = 'gcs-get',
       note           = 'created '+ (new Date()).toISOString() + ' for GCS-Get example';
 
 // ========================================================
-
-function insureOneMap(org, opt) {
-  return }
 
 function resetDemo(org) {
   let delOptions = {
@@ -85,12 +82,15 @@ function resetDemo(org) {
     .then( _ => common.logWrite('ok. demo assets have been deleted'));
 }
 
-console.log(
-  'Apigee GCS-Get Example Provisioning tool, version: ' + version + '\n' +
-    'Node.js ' + process.version + '\n');
-
-common.logWrite('start');
 let opt = getopt.parse(process.argv.slice(2));
+if (opt.options.verbose) {
+  console.log(
+    `Apigee GCS-Get Example Provisioning tool, version: ${version}\n` +
+      `Node.js ${process.version}\n`);
+
+  common.logWrite('start');
+}
+
 common.verifyCommonRequiredParameters(opt.options, getopt);
 
 if ( !opt.options.env ) {
