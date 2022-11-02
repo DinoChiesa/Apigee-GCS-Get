@@ -32,13 +32,13 @@
       </Request>
       <Response>
       </Response>
-      <Condition>proxy.pathsuffix MatchesPath "/b/*/o/*" and request.verb = "GET"</Condition>
+      <Condition>proxy.pathsuffix MatchesPath "/b/*/o/**" and request.verb = "GET"</Condition>
     </Flow>
 
     <Flow name="unknown request">
       <Request>
         <Step>
-          <Name>RF-UnknownRequest</Name>
+          <Name>RF-Unknown-Request</Name>
         </Step>
       </Request>
       <Response>

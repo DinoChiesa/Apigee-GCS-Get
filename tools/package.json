@@ -1,7 +1,7 @@
 {
-  "name": "oauthv2-cc-and-jwt-example-tools",
-  "version": "1.0.1",
-  "description": "tools for OAuthV2 CC-and-JWT Example",
+  "name": "GCS-get-example-tools",
+  "version": "1.0.2",
+  "description": "tools for the GCS Facade proxy Example",
   "main": "provision.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,11 +9,14 @@
   "author": "Dino Chiesa <dchiesa@google.com>",
   "license": "Apache-2.0",
   "dependencies": {
-    "apigee-edge-js": ">=0.4.19",
-    "sprintf-js": "^1.1.1",
-    "node-getopt": "^0.3.1"
+    "apigee-edge-js": ">=0.4.33",
+    "sprintf-js": "^1.1.2",
+    "node-getopt": "git://github.com/tuxpoldo/node-getopt.git#05e498731c14b648fa332ca78d3a301c5e4be440"
+  },
+  "overrides": {
+    "lodash": "^4.17.21"
   },
   "engines": {
-    "node": ">6.2.0"
+    "node": ">= 12.22.0"
   }
 }

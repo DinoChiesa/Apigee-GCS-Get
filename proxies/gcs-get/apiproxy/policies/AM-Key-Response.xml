@@ -1,4 +1,4 @@
-<AssignMessage name='AM-KeyResponse'>
+<AssignMessage name='AM-Key-Response'>
   <Remove>
     <Headers/>
   </Remove>

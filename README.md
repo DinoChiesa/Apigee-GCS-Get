@@ -3,7 +3,6 @@
 This Apigee proxy connects to a GCS bucket. It allows callers to GET objects
 from the bucket.
 
-
 ## Disclaimer
 
 This example is not an official Google product, nor is it part of an
@@ -25,11 +24,12 @@ Also, in the same project, use the [Google Cloud console](https://console.cloud.
 
 You can also do these things using [gcloud](https://cloud.google.com/sdk/docs/install), but I don't know the exact steps!
 
+
 ## Apigee Setup
 
 Use the Apigee Admin UI to:
 
-1. Create an encrypted KVM called 'secrets'
+1. Create an environment-scoped encrypted KVM called 'secrets'
 
 2. Import and Deploy the sharedflow.
 
@@ -44,18 +44,27 @@ cd tools
 npm install
 ORG=myorg
 ENV=test
-node ./provision.js -v -n -o $ORG -e $ENV
+# for Apigee Edge
+node ./provision.js -v --token $TOKEN -o $ORG -e $ENV
+
+# for Apigee X or hybrid
+node ./provision.js -v --apigeex --token $TOKEN -o $ORG -e $ENV
 ```
 
-The tool will prompt you for authentication credentials for Apigee.
+You will need to have an OAuth token for your Apigee organization.
 
 
 ## Using the proxy
 
-Now you need to 
-upload the service-account key JSON file into the Apigee KVM. The Apigee proxy will load it into the encrypted KVM map called "secrets".
+Now you need to upload the service-account key JSON file into the Apigee
+KVM. The Apigee proxy will load it into the encrypted KVM map called "secrets".
+
 ```
+# Edge
 endpoint=https://$ORG-$ENV.apigee.net
+# X or hybrid
+endpoint=https://whatever-the-endpoint-is.com
+
 curl -i $endpoint/gcs-get/kvm/keyjson \
   -X POST \
   -d @my-gcs-project-service-account-key.json
@@ -73,13 +82,20 @@ OBJECT=my-object-name.xlsx
 curl -i $endpoint/gcs-get/b/$BUCKET/o/$OBJECT
 ```
 
-
 You should see the downloaded object.
+
+If you have an object in a folder, then you must prepend the folder name to the object identifier, and URL-encode the slash.  like so:
+```
+OBJECT=foldername%2Fmy-object-name.xlsx
+curl -i $endpoint/gcs-get/b/$BUCKET/o/$OBJECT
+```
 
 ## What's Happening
 
 The API Proxy uses the service account key to Obtain and cache an OAuth token
-suitable for reading from GCS. This process is described
+suitable for reading from GCS. It does this by calling out to a Shared Flow.  (** Please note: explicitly obtaining an OAuth token is no longer necessary if you use Apigee X, because Apigee X supports [the GoogleAuthentication element](https://cloud.google.com/apigee/docs/api-platform/security/google-auth/overview) in the ServiceCallouts and HTTPTargetConnections. )
+
+The process of obtaining an OAuth token using the service account key is described
 [here](https://developers.google.com/identity/protocols/oauth2/service-account#authorizingrequests). In
 short, the app must create a self-signed JWT and POSTs it to
 https://oauth2.googleapis.com/token with a x-www-form-urlencoded payload, and two form parameters:
@@ -138,14 +154,14 @@ Use the Apigee Admin UI to:
 
 ### Automation of teardown
 
-The provisioning tool also can tear down the things that have been set up.
+Instead of using the Apigee UI, you can use the provisioning tool to tear down the things that you have set up.
 
 ```
 node ./provision.js -v -n -o $ORG -e $ENV -R
 ```
 
 The tool will prompt you for authentication credentials for Apigee.
-If you use the tool, you need to manually delete the `googleapis_credentials_json` key/value pair from the `secrets` key value map.
+If you use the tool, you need to separately, manually delete the `googleapis_credentials_json` key/value pair from the `secrets` key value map.
 
 
 ## Support
@@ -157,5 +173,5 @@ responses to inquiries regarding this example.
 
 ## License
 
-This material is Copyright 2020-2021 Google LLC.
+This material is Copyright 2020-2022 Google LLC.
 and is licensed under the [Apache 2.0 License](LICENSE).

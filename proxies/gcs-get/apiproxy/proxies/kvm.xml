@@ -32,7 +32,7 @@
       </Request>
       <Response>
         <Step>
-          <Name>AM-KeyResponse</Name>
+          <Name>AM-Key-Response</Name>
         </Step>
       </Response>
       <Condition>proxy.pathsuffix MatchesPath "/keyjson" AND request.verb = "POST"</Condition>
@@ -41,7 +41,7 @@
     <Flow name="unknown request">
       <Request>
         <Step>
-          <Name>RF-UnknownRequest</Name>
+          <Name>RF-Unknown-Request</Name>
         </Step>
       </Request>
       <Response>

@@ -4,7 +4,7 @@
 // ------------------------------------------------------------------
 // provision an Apigee Proxy and sharedflow for a GCS example.
 //
-// Copyright 2017-2021 Google LLC.
+// Copyright 2017-2022 Google LLC.
 //
 
 /* jshint esversion: 9, strict:implied */
@@ -21,7 +21,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// last saved: <2021-May-10 08:21:38>
+// last saved: <2022-November-02 16:25:09>
 
 const apigeejs   = require('apigee-edge-js'),
       common     = apigeejs.utility,
@@ -29,7 +29,7 @@ const apigeejs   = require('apigee-edge-js'),
       util       = require('util'),
       path       = require('path'),
       Getopt     = require('node-getopt'),
-      version    = '20210510-0820',
+      version    = '20221102-1610',
       getopt     = new Getopt(common.commonOptions.concat([
         ['R' , 'reset', 'Optional. Reset, delete all the assets previously created by this script'],
         ['e' , 'env=ARG', 'the Edge environment to use for this demonstration. ']
@@ -99,16 +99,7 @@ if ( !opt.options.env ) {
   process.exit(1);
 }
 
-let connectOptions = {
-        mgmtServer : opt.options.mgmtserver,
-        org        : opt.options.org,
-        user       : opt.options.username,
-        password   : opt.options.password,
-        no_token   : opt.options.notoken,
-        verbosity  : opt.options.verbose || 0
-      };
-
-apigee.connect(connectOptions)
+apigee.connect(common.optToOptions(opt))
   .then( org => {
     common.logWrite('connected');
     if (opt.options.reset) {
